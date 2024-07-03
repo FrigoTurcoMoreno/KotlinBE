@@ -17,7 +17,11 @@ class UserServiceImpl : UserService {
 
     override fun findUser(email: String): User? = userRepository.findUserByEmail(email)
 
-    override fun insertUser(user: User): User? = userRepository.save(user)
+    //if there is no user
+    override fun insertUser(user: User): User? {
+        return if (userRepository.findUserByEmail(user.email) != null) null
+        else userRepository.save(user)
+    }
 
     //if there is a user
     override fun updateUser(user: User): User? = user.id?.let {

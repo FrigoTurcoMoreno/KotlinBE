@@ -1,16 +1,10 @@
 package dev.basic.kotlinBE.model
 
 import jakarta.persistence.*
-import lombok.Getter
-import lombok.Setter
-import lombok.ToString
-import java.util.UUID
+import java.util.*
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
-@ToString
 data class User(
     @Id
     @GeneratedValue
@@ -25,7 +19,21 @@ data class User(
     val password: String,
     @Column(nullable = false)
     val role: Role
-)
+){
+    companion object{
+        fun toUserRequest(user: User): UserRequest = UserRequest(
+            email = user.email,
+            password = user.password
+        )
+
+        fun toUserResponse(user: User): UserResponse = UserResponse(
+            firstName = user.firstName,
+            lastName = user.lastName,
+            email = user.email,
+            role = user.role
+        )
+    }
+}
 
 enum class Role{
     USER,

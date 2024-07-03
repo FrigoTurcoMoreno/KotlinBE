@@ -26,8 +26,6 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	runtimeOnly("mysql:mysql-connector-java:8.0.33")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	compileOnly("org.projectlombok:lombok")
-	annotationProcessor("org.projectlombok:lombok")
 }
 
 kotlin {
