@@ -15,7 +15,10 @@ class UserServiceImpl : UserService {
 
     override fun findAll(): List<User> = userRepository.findAll()
 
+
     override fun findUser(email: String): User? = userRepository.findUserByEmail(email)
+
+    override fun findUser(id: UUID): User? = userRepository.findById(id).orElse(null)
 
     //if there is no user
     override fun insertUser(user: User): User? {

@@ -1,6 +1,7 @@
 package dev.basic.kotlinBE.model
 
 import jakarta.persistence.*
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import java.util.*
 
 @Entity
@@ -10,15 +11,15 @@ data class User(
     @GeneratedValue
     val id: UUID?,
     @Column(name = "first_name", nullable = false)
-    val firstName: String,
+    var firstName: String,
     @Column(name = "last_name", nullable = false)
-    val lastName: String,
+    var lastName: String,
     @Column(unique = true,  nullable = false)
     val email: String,
     @Column(nullable = false)
-    val password: String,
+    var password: String,
     @Column(nullable = false)
-    val role: Role
+    var isAdmin: Boolean
 ){
     companion object{
         fun toUserRequest(user: User): UserRequest = UserRequest(
@@ -30,12 +31,13 @@ data class User(
             firstName = user.firstName,
             lastName = user.lastName,
             email = user.email,
-            role = user.role
+            isAdmin = user.isAdmin
         )
     }
-}
 
-enum class Role{
-    USER,
-    ADMIN
+    fun getAuthorities() = if (isAdmin) {
+        listOf(SimpleGrantedAuthority("ADMIN"))
+    } else {
+        listOf(SimpleGrantedAuthority("USER"))
+    }
 }

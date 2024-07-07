@@ -8,9 +8,12 @@ interface UserService {
 
     fun findUser(email: String): User?
 
+    fun findUser(id: UUID): User?
+
     fun insertUser(user: User): User?
 
     fun updateUser(user: User): User?
 
     fun deleteUser(id: UUID): Boolean
+
 }
