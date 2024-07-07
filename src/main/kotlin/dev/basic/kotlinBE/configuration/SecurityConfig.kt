@@ -27,7 +27,8 @@ class SecurityConfig {
             }
             .authorizeHttpRequests {
                 it.requestMatchers("/auth/**").permitAll()
-                    .anyRequest().hasAuthority("ADMIN")
+                    .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
+                    .anyRequest().hasAnyAuthority("USER", "ADMIN")
             }
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

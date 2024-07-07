@@ -2,8 +2,10 @@ package dev.basic.kotlinBE.controller
 
 import dev.basic.kotlinBE.model.User
 import dev.basic.kotlinBE.model.UserResponse
+import dev.basic.kotlinBE.service.`interface`.TokenService
 import dev.basic.kotlinBE.service.`interface`.UserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -15,26 +17,16 @@ class UserController {
     @Autowired
     private lateinit var userService: UserService
 
+    @Autowired
+    private lateinit var tokenService: TokenService
+
+
     @GetMapping
-    fun findAll(): ResponseEntity<List<UserResponse>> = ResponseEntity.ok(userService.findAll().map {
-        User.toUserResponse(it)
-    })
+    fun getInfo(@RequestHeader(HttpHeaders.AUTHORIZATION) authHeader: String?): ResponseEntity<UserResponse?> =
+        authHeader?.takeIf { it.startsWith("Bearer ") }?.substring(7)?.let { token ->
+            userService.findUser(tokenService.getUUID(token))?.let { user ->
+                ResponseEntity.ok(User.toUserResponse(user))
+            } ?: ResponseEntity.status(403).body(null)
+        } ?: ResponseEntity.status(403).body(null)
 
-    @GetMapping("/{email}")
-    fun findUser(@PathVariable("email") email: String): ResponseEntity<User?> = userService.findUser(email)?.let {
-        ResponseEntity.ok(it)
-    } ?: ResponseEntity.status(404).body(null)
-
-    @PostMapping
-    fun insertUser(@RequestBody user: User): ResponseEntity<UserResponse?> = userService.insertUser(user)?.let {
-        ResponseEntity.ok(User.toUserResponse(it))
-    } ?: ResponseEntity.status(409).body(null)
-
-    @PutMapping
-    fun updateUser(@RequestBody user: User): ResponseEntity<UserResponse?> = userService.updateUser(user)?.let {
-        ResponseEntity.ok(User.toUserResponse(it))
-    } ?: ResponseEntity.status(404).body(null)
-
-    @DeleteMapping("/{id}")
-    fun deleteUser(@PathVariable("id") id: UUID): ResponseEntity<Boolean> = ResponseEntity.ok(userService.deleteUser(id))
 }
