@@ -36,6 +36,7 @@ class AuthController {
     @PostMapping("/register")
     fun register(@RequestBody user: User): ResponseEntity<String> {
         user.password = passwordEncoder.encode(user.password)
+        user.isAdmin = false
         return userService.insertUser(user)?.let {
             ResponseEntity.ok(tokenService.generate(it.id!!))
         } ?: ResponseEntity.status(409).body("")
