@@ -22,11 +22,7 @@ data class User(
     var isAdmin: Boolean
 ){
     companion object{
-        fun toUserRequest(user: User): UserRequest = UserRequest(
-            email = user.email,
-            password = user.password
-        )
-
+        //static function to map the user into the UserResponse model
         fun toUserResponse(user: User): UserResponse = UserResponse(
             id = user.id!!,
             firstName = user.firstName,
@@ -36,6 +32,7 @@ data class User(
         )
     }
 
+    //function to set the authorities depending on the isAdmin variable
     fun getAuthorities() = if (isAdmin) {
         listOf(SimpleGrantedAuthority("ADMIN"))
     } else {

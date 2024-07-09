@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
+//api reachable only from admin
 @RestController
 @RequestMapping("api/admin")
 class AdminController {

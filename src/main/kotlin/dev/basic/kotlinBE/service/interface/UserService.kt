@@ -3,6 +3,7 @@ package dev.basic.kotlinBE.service.`interface`
 import dev.basic.kotlinBE.model.User
 import java.util.*
 
+//interface to generate the user methods to implement
 interface UserService {
     fun findAll(): List<User>
 

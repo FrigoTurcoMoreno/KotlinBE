@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
 
+//implementation of the user persistence logic
 @Service
 class UserServiceImpl : UserService {
 
@@ -15,9 +16,8 @@ class UserServiceImpl : UserService {
 
     override fun findAll(): List<User> = userRepository.findAll()
 
-
+    //overload of find one user functions
     override fun findUser(email: String): User? = userRepository.findUserByEmail(email)
-
     override fun findUser(id: UUID): User? = userRepository.findById(id).orElse(null)
 
     //if there is no user

@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
-
+//basic be security configuration
 @Configuration
 @EnableWebSecurity
 class SecurityConfig {
@@ -26,17 +26,21 @@ class SecurityConfig {
                 it.disable()
             }
             .authorizeHttpRequests {
+                //permit all the requests to authentication api
                 it.requestMatchers("/auth/**").permitAll()
+                    //permit all the requests to admin api only for the admin
                     .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
+                    //permit all the other requests (kind of the user appi)
                     .anyRequest().hasAnyAuthority("USER", "ADMIN")
             }
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
+            //adding the authorization filter
             .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter::class.java)
             .build()
 
-
+    //bean for password encoder
     @Bean
     fun encode(): PasswordEncoder = BCryptPasswordEncoder(11)
 }

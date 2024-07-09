@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
+//controller for admin and user to get information
 @RestController
 @RequestMapping("api/user")
 class UserController {
