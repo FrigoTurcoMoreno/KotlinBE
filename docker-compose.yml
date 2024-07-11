@@ -1,18 +1,27 @@
 services:
   db:
-    image: mysql:latest
+    image: kotlin-be-db
     container_name: mysql_db
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: basic_be
-      MYSQL_USER: user
-      MYSQL_PASSWORD: root
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./dump-db-basic_be.sql:/docker-entrypoint-initdb.d/init.sql
-    command: --init-file /docker-entrypoint-initdb.d/init.sql
+    networks:
+      - back
+
+  be:
+    image: kotlin-be
+    container_name: kotlin-be
+    ports:
+      - "8080:8080"
+    networks:
+      - back
+    depends_on:
+      - db  
+
 
 volumes:
   db_data:
+
+networks:
+  back:
