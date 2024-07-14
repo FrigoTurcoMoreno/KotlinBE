@@ -1,4 +1,4 @@
-package dev.basic.kotlinBE.model
+package dev.basic.kotlinBE.dto
 
 //model for the login request
 data class UserRequest(

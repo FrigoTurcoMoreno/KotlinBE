@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.security.Key
 import java.util.*
+import dev.basic.kotlinBE.dto.TokenDto
 
 
 //implementation of the token service
@@ -19,8 +20,8 @@ class TokenServiceImpl : TokenService {
     private lateinit var key: String
 
     //generate token function
-    override fun generate(id: UUID): String =
-        Jwts.builder()
+    override fun generate(id: UUID): TokenDto {
+        val token = Jwts.builder()
             .claims()//add the claims if necessary
             .subject(id.toString())//using the id of the user as subject to recover it easily
             .issuedAt(Date(System.currentTimeMillis()))
@@ -29,11 +30,17 @@ class TokenServiceImpl : TokenService {
             .signWith(hashKey())
             .compact()
 
+        return TokenDto(token, expiresIn(token))
+    }
+
+    //set how much it takes to the token to expire
+    override fun expiresIn(token: String): Long = getClaims(token).expiration.time - getClaims(token).issuedAt.time
+
     //verify if the token is still valid
-    override fun verifyToken(token: String): Boolean = !isExpired(token)
+    override fun verifyToken(token: TokenDto): Boolean = !isExpired(token.jwt!!)
 
     //recover the uuid from the token subject
-    override fun getUUID(token: String): UUID = UUID.fromString(getClaims(token).subject)
+    override fun getUUID(token: TokenDto): UUID = UUID.fromString(getClaims(token.jwt!!).subject)
 
     //support function in order to simplify the verifying token logic
     private fun isExpired(token: String): Boolean = getClaims(token).expiration.before(Date(System.currentTimeMillis()))

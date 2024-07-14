@@ -1,5 +1,6 @@
 package dev.basic.kotlinBE.configuration
 
+import dev.basic.kotlinBE.dto.TokenDto
 import dev.basic.kotlinBE.service.`interface`.TokenService
 import dev.basic.kotlinBE.service.`interface`.UserService
 import jakarta.servlet.FilterChain
@@ -32,10 +33,11 @@ class AuthFilter : OncePerRequestFilter() {
 
         //if it exists and that is a bearer, im going to take the token present
         authHeader?.takeIf { it.startsWith("Bearer ") }?.substring(7)?.let { token ->
+            val tokenDto = TokenDto(token, tokenService.expiresIn(token))
             //verify if the token is still valid
-            if (tokenService.verifyToken(token)) {
+            if (tokenService.verifyToken(tokenDto)) {
                 //recovering the id of the user
-                val userId = tokenService.getUUID(token)
+                val userId = tokenService.getUUID(tokenDto)
                 //if it is found
                 userService.findUser(userId)?.let { user ->
                     //set the authorization of the user
