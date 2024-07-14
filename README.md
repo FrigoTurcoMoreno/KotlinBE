@@ -31,5 +31,6 @@ Moreno Frigo Turco
 - [![GitHub Icon](https://img.icons8.com/material-outlined/24/ffffff/github.png)](https://github.com/FrigoTurcoMoreno) [GitHub](https://github.com/FrigoTurcoMoreno)
 - [![LinkedIn Icon](https://img.icons8.com/material-rounded/24/ffffff/linkedin.png)](https://www.linkedin.com/in/moreno-frigo-turco-4a423a294) [LinkedIn](https://www.linkedin.com/in/moreno-frigo-turco-4a423a294)
 - [![Instagram Icon](https://img.icons8.com/material-rounded/24/ffffff/instagram-new.png)](https://www.instagram.com/morenofrigo.dev) [Instagram](https://www.instagram.com/morenofrigo.dev)
+- [![X Icon](https://img.icons8.com/material-rounded/24/ffffff/twitter.png)](https://x.com/morenofrigo_dev) [X](https://x.com/morenofrigo_dev)
 
 Feel free to reach out for any questions or collaboration opportunities!
