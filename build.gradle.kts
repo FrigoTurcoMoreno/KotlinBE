@@ -1,12 +1,13 @@
 plugins {
+	val kotlinVersion = "2.0.0"
 	id("org.springframework.boot") version "3.3.1"
 	id("io.spring.dependency-management") version "1.1.5"
-	kotlin("plugin.jpa") version "1.9.24"
-	kotlin("jvm") version "1.9.24"
-	kotlin("plugin.spring") version "1.9.24"
+	kotlin("plugin.jpa") version kotlinVersion
+	kotlin("jvm") version kotlinVersion
+	kotlin("plugin.spring") version kotlinVersion
 }
 
-group = "com.basic"
+group = "dev.basic"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -25,9 +26,10 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-	implementation("io.jsonwebtoken:jjwt-api:0.12.6")
-	implementation("io.jsonwebtoken:jjwt-impl:0.12.6")
-	implementation("io.jsonwebtoken:jjwt-jackson:0.12.6")
+	val jjwtVersion = "0.12.6"
+	implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
+	implementation("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
+	implementation("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
 
 	implementation("org.springframework.boot:spring-boot-starter-security:3.3.1")
 	implementation("org.springframework.security:spring-security-core:6.3.1")

@@ -13,19 +13,19 @@ services:
     env_file:
       - ./properties.env
 
-  be:
-    build:
-      context: .
-      dockerfile: Dockerfile.be
-    container_name: kotlin-be
-    ports:
-      - "8080:8080"
-    networks:
-      - back
-    depends_on:
-      - db
-    env_file:
-      - ./properties.env
+  #be:
+  #  build:
+  #    context: .
+  #    dockerfile: Dockerfile.be
+  #  container_name: kotlin-be
+  #  ports:
+  #    - "8080:8080"
+  #  networks:
+  #    - back
+  #  depends_on:
+  #    - db
+  #  env_file:
+  #    - ./properties.env
 
 
 volumes:
