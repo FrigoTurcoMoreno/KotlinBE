@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.UUID
 
 //model for the response
-data class UserResponse(
+data class UserResponseDto(
     val id: UUID,
     @JsonProperty("first_name")
     val firstName: String,

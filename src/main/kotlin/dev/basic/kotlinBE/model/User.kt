@@ -1,7 +1,7 @@
 package dev.basic.kotlinBE.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import dev.basic.kotlinBE.dto.UserResponse
+import dev.basic.kotlinBE.dto.UserResponseDto
 import jakarta.persistence.*
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import java.util.*
@@ -21,14 +21,14 @@ data class User(
     @Column(unique = true,  nullable = false)
     val email: String,
     @Column(nullable = false)
-    var password: String,
+    var password: String?,
     @Column(nullable = false)
     @JsonProperty("is_admin")
     var isAdmin: Boolean
 ){
     companion object{
         //static function to map the user into the UserResponse model
-        fun toUserResponseDto(user: User): UserResponse = UserResponse(
+        fun toUserResponseDto(user: User): UserResponseDto = UserResponseDto(
             id = user.id!!,
             firstName = user.firstName,
             lastName = user.lastName,

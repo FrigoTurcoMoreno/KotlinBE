@@ -1,5 +1,7 @@
 package dev.basic.kotlinBE.service.`interface`
 
+import dev.basic.kotlinBE.dto.TokenDto
+import dev.basic.kotlinBE.dto.UserRequestDto
 import dev.basic.kotlinBE.model.User
 import java.util.*
 
@@ -16,5 +18,4 @@ interface UserService {
     fun updateUser(user: User): User?
 
     fun deleteUser(id: UUID): Boolean
-
 }

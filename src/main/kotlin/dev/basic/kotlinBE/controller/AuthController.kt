@@ -2,7 +2,7 @@ package dev.basic.kotlinBE.controller
 
 import dev.basic.kotlinBE.dto.TokenDto
 import dev.basic.kotlinBE.model.User
-import dev.basic.kotlinBE.dto.UserRequest
+import dev.basic.kotlinBE.dto.UserRequestDto
 import dev.basic.kotlinBE.service.`interface`.TokenService
 import dev.basic.kotlinBE.service.`interface`.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,19 +28,19 @@ class AuthController {
     private lateinit var passwordEncoder: PasswordEncoder
 
     @PostMapping("/login")
-    fun login(@RequestBody userRequest: UserRequest): ResponseEntity<TokenDto> =
-        userService.findUser(userRequest.email)?.let {
-           return if (passwordEncoder.matches(userRequest.password, it.password)){
+    fun login(@RequestBody userRequestDto: UserRequestDto): ResponseEntity<TokenDto?> =
+        userService.findUser(userRequestDto.email)?.let {
+           return if (passwordEncoder.matches(userRequestDto.password, it.password)){
                ResponseEntity.ok(tokenService.generate(it.id!!))
-           } else ResponseEntity.status(404).body(TokenDto())
-        } ?: ResponseEntity.status(404).body(TokenDto())
+           } else ResponseEntity.status(404).body(null)
+        } ?: ResponseEntity.status(404).body(null)
 
     @PostMapping("/register")
-    fun register(@RequestBody user: User): ResponseEntity<TokenDto> {
+    fun register(@RequestBody user: User): ResponseEntity<TokenDto?> {
         user.password = passwordEncoder.encode(user.password)
         user.isAdmin = false
         return userService.insertUser(user)?.let {
             ResponseEntity.ok(tokenService.generate(it.id!!))
-        } ?: ResponseEntity.status(409).body(TokenDto())
+        } ?: ResponseEntity.status(409).body(null)
     }
 }
