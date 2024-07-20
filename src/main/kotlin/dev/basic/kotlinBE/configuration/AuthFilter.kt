@@ -15,13 +15,11 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 //configuration of the authorization filter
 @Component
-class AuthFilter : OncePerRequestFilter() {
+class AuthFilter @Autowired constructor(
+    private val userService: UserService,
+    private val tokenService: TokenService
+): OncePerRequestFilter() {
 
-    @Autowired
-    private lateinit var userService: UserService
-
-    @Autowired
-    private lateinit var tokenService: TokenService
 
     override fun doFilterInternal(
         request: HttpServletRequest,

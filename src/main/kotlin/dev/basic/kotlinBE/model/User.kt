@@ -14,17 +14,19 @@ data class User(
     val id: UUID?,
     @Column(name = "first_name", nullable = false)
     @JsonProperty("first_name")
-    var firstName: String,
+    var firstName: String = "",
     @Column(name = "last_name", nullable = false)
     @JsonProperty("last_name")
-    var lastName: String,
+    var lastName: String = "",
     @Column(unique = true,  nullable = false)
-    val email: String,
+    @JsonProperty("email")
+    var email: String = "",
     @Column(nullable = false)
-    var password: String?,
+    @JsonProperty("password")
+    var password: String = "",
     @Column(nullable = false)
     @JsonProperty("is_admin")
-    var isAdmin: Boolean
+    var isAdmin: Boolean = false
 ){
     companion object{
         //static function to map the user into the UserResponse model
